@@ -1,0 +1,15 @@
+{
+    "projectName": "FirstLambda",
+    "languages": [{
+        "id": "first-lambda",
+        "grammar": "src/language/first-lambda.langium",
+        "fileExtensions": [".fla"],
+        "textMate": {
+            "out": "syntaxes/first-lambda.tmLanguage.json"
+        },
+        "monarch": {
+            "out": "src/syntaxes/first-lambda.monarch.ts"
+        }
+    }],
+    "out": "src/language/generated"
+}
