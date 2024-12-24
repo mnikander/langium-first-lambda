@@ -15,13 +15,13 @@ Parameter:
 type VariableOrParameter = Variable | Parameter;
 
 Expression:
-    Literal | function=[VariableOrParameter:ID] (arguments+=ParenthesizedExpression)*;
+    '(' Expression ')' | Literal | body+=[VariableOrParameter:ID] | FunctionCall;
 
-ParenthesizedExpression:
-    '(' Expression ')' | Expression;
+FunctionCall:
+    function=[VariableOrParameter:ID] (arguments+=Literal | arguments+=ID | '(' arguments+=Expression ')')*;
 
 Lambda:
-    'lambda' (parameters+=Parameter)* '->' ParenthesizedExpression;
+    'lambda' (parameters+=Parameter)* '->' Expression;
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
