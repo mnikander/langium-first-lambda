@@ -1,18 +1,31 @@
 grammar FirstLambda
 
 entry Model:
-    (persons+=Person | greetings+=Greeting)*;
+    (variables+=Variable)*;
 
-Person:
-    'person' name=ID;
+Literal:
+    value=(INT | STRING);
 
-Greeting:
-    'Hello' person=[Person:ID] '!';
+Variable:
+    'let' name=ID '=' (Expression | Lambda);
+
+Parameter:
+    name=ID;
+
+type VariableOrParameter = Variable | Parameter;
+
+Expression:
+    Literal | function=[VariableOrParameter:ID] (arguments+=ParenthesizedExpression)*;
+
+ParenthesizedExpression:
+    '(' Expression ')' | Expression;
+
+Lambda:
+    'lambda' (parameters+=Parameter)* '->' ParenthesizedExpression;
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
 terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
 
-hidden terminal ML_COMMENT: /\/\*[\s\S]*?\*\//;
-hidden terminal SL_COMMENT: /\/\/[^\n\r]*/;
+hidden terminal SL_COMMENT: /\#[^\n\r]*/;
