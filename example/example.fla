@@ -1,25 +1,11 @@
 let x = 5
-let y = "foo"
-let z = x
-let u = something  # expected error: Could not resolve reference to Identifier named 'something'.
+let y = x
+let a = 1
+let first = (lambda a b -> a)
+let second = (lambda a b -> b)
+let z = (first 2 y)
 
-let find_answer  = lambda     -> 42            # a zero-argument function which returns 42
-let first        = lambda a b -> a
-let second       = lambda a b -> b
-let test         = lambda a b -> a b x y 5     # TODO: a validation which checks the number of arguments
-let test2        = lambda a b -> somethingElse # expected error: Could not resolve reference...
+let foo = (lambda -> 42)
+let bar = (lambda -> x)
 
-let pi = 3
-let pi = 4          # TODO: write a validation which forbids multiple definitions
-let ambiguous = pi  # refers to 'pi = 3' since langium selects the first matching reference
-
-let test3 = first (second "a" "b") "c"
-
-# should it be valid syntax to create lambda and apply it immediately?
-let test4  = (lambda -> 43)                  # with the syntax change, this would equal 43
-let test5a = first "foo" "bar"               # in any case, this equals "foo"
-let test5b = (lambda -> first "foo" "bar")   # with the syntax change, this would equal "foo"
-# I'm not sure this is relevant, unless there is currying
-
-# TODO: add unit testing to this project, so these checks can be done automatically
-# TODO (later on): add syntax for type annotations
+let if = (lambda condition then else -> (condition then else))

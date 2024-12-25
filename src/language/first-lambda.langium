@@ -3,25 +3,19 @@ grammar FirstLambda
 entry Model:
     (variables+=Variable)*;
 
+Variable:
+    'let' name=ID '=' (Expression);
+
 Literal:
     value=(INT | STRING);
 
-Variable:
-    'let' name=ID '=' (Expression | Lambda);
-
-Parameter:
-    name=ID;
-
-type VariableOrParameter = Variable | Parameter;
+Lambda:
+    'lambda' (parameters+=ID)* '->' (body+=Expression)*;
 
 Expression:
-    '(' Expression ')' | Literal | body+=[VariableOrParameter:ID] | FunctionCall;
-
-FunctionCall:
-    function=[VariableOrParameter:ID] (arguments+=Literal | arguments+=ID | '(' arguments+=Expression ')')*;
-
-Lambda:
-    'lambda' (parameters+=Parameter)* '->' Expression;
+    value=Literal | reference=ID
+    | '(' lambda=Lambda ')'
+    | ('(' call=ID arguments+=Expression* ')');
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
