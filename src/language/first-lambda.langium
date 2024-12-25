@@ -10,7 +10,7 @@ Literal:
     value=(INT | STRING);
 
 Lambda:
-    'lambda' (parameters+=ID)* '->' (body+=Expression)*;
+    'lambda' (parameters+=ID)* '->' value=Expression;
 
 Expression:
     value=Literal | reference=ID
