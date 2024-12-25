@@ -1,11 +1,11 @@
 let x = 5
 let y = x
 let a = 1
-let first = (lambda a b -> a)
-let second = (lambda a b -> b)
-let z = (first 2 y)
+let first = lambda a b -> a
+let second = lambda a b -> b
+let z = first 2 y
 
-let foo = (lambda -> 42)
-let bar = (lambda -> x)
+let foo = lambda -> 42
+let bar = lambda -> x
 
-let if = (lambda condition then else -> (condition then else))
+let if = lambda condition then else -> (condition then else)
