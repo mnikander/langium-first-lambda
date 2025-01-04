@@ -45,9 +45,9 @@ describe('Parsing tests', () => {
         `);
     });
 
-    test('parse function', async () => {
+    test('parse nilary lambda definition', async () => {
         document = await parse(`
-            let answer = lambda -> 42          # nilary function definition
+            let a = lambda -> {42}
         `);
 
         expect(
@@ -57,7 +57,59 @@ describe('Parsing tests', () => {
             `
         ).toBe(s`
             Variables:
-              answer
+              a
+        `);
+    });
+
+    test('parse function call', async () => {
+        document = await parse(`
+            let first = lambda a b -> {a}
+            let a     = (first 1 2)
+        `);
+
+        expect(
+            checkDocumentValid(document) || s`
+                Variables:
+                  ${document.parseResult.value?.variables?.map(v => v.name)?.join('\n')}
+            `
+        ).toBe(s`
+            Variables:
+              first
+              a
+        `);
+    });
+
+    test('parse nested function call', async () => {
+        document = await parse(`
+            let first = lambda a b -> {a}
+            let a     = (first (first 1 2) 3)
+        `);
+
+        expect(
+            checkDocumentValid(document) || s`
+                Variables:
+                  ${document.parseResult.value?.variables?.map(v => v.name)?.join('\n')}
+            `
+        ).toBe(s`
+            Variables:
+              first
+              a
+        `);
+    });
+
+    test('parse immediately-invoked lambda', async () => {
+        document = await parse(`
+            let x = (lambda a b -> {a} 1 2)
+        `);
+
+        expect(
+            checkDocumentValid(document) || s`
+                Variables:
+                  ${document.parseResult.value?.variables?.map(v => v.name)?.join('\n')}
+            `
+        ).toBe(s`
+            Variables:
+              x
         `);
     });
 });
