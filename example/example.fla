@@ -22,5 +22,6 @@ let false = second
 let if = (lambda condition then else -> (condition then else))
 
 let immediate = ((lambda a b -> a) 1 2)
+let simple_im = (lambda a b -> a) 1 2
 let nested    = (lambda a b -> ((lambda c d -> 5) 1 2))
 let five      = ((lambda a b -> ((lambda c d -> 5) 1 2)) 3 4)

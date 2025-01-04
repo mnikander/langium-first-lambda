@@ -27,7 +27,7 @@ Application:
     '(' (lambda=Lambda | call=[Ref:ID]) argument_values+=Expression* ')';
 
 OutermostApplication:
-    call=[Ref:ID] argument_values+=Expression+;
+    (call=[Ref:ID] | lambda=Lambda) argument_values+=Expression+;
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
