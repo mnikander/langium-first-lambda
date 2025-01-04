@@ -19,10 +19,10 @@ beforeAll(async () => {
 
 describe('Parsing tests', () => {
 
-    test('parse simple model', async () => {
+    test('parse variables', async () => {
         document = await parse(`
-            person Langium
-            Hello Langium!
+            let x = 5
+            let y = x
         `);
 
         // check for absensce of parser errors the classic way:
@@ -35,16 +35,29 @@ describe('Parsing tests', () => {
             // prior to the tagged template expression we check for validity of the parsed document object
             //  by means of the reusable function 'checkDocumentValid()' to sort out (critical) typos first;
             checkDocumentValid(document) || s`
-                Persons:
-                  ${document.parseResult.value?.persons?.map(p => p.name)?.join('\n  ')}
-                Greetings to:
-                  ${document.parseResult.value?.greetings?.map(g => g.person.$refText)?.join('\n  ')}
+                Variables:
+                  ${document.parseResult.value?.variables?.map(v => v.name)?.join('\n')}
             `
         ).toBe(s`
-            Persons:
-              Langium
-            Greetings to:
-              Langium
+            Variables:
+              x
+              y
+        `);
+    });
+
+    test('parse function', async () => {
+        document = await parse(`
+            let answer = lambda -> 42          # nilary function definition
+        `);
+
+        expect(
+            checkDocumentValid(document) || s`
+                Variables:
+                  ${document.parseResult.value?.variables?.map(v => v.name)?.join('\n')}
+            `
+        ).toBe(s`
+            Variables:
+              answer
         `);
     });
 });
