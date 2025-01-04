@@ -1,27 +1,27 @@
 # variable definitions and references
-let x = 5
-let y = x
+let x           = 5
+let y           = x
 
 # nilary functions and captures
-let answer  = (lambda -> 42)
-let capture = (lambda -> x)
+let answer      = (lambda -> 42)
+let capture     = (lambda -> x)
 
 # function definition and shadowing
-let a = 1
-let first  = (lambda a b -> a)
-let second = (lambda a b -> b)
+let a           = 1
+let first       = (lambda a b -> a)
+let second      = (lambda a b -> b)
 
 # function calls
-let b = (first 2 y)
-let c = first 2 y
-let d = (first (first 1 2) 3)
+let application = (first 2 y)
+let simple_app  = first 2 y
+let nested_app  = (first (first 1 2) 3)
 
 # Church encoding of booleans and definition of an 'if' function
-let true = first
-let false = second
-let if = (lambda condition then else -> (condition then else))
+let true        = first
+let false       = second
+let if          = (lambda condition then else -> (condition then else))
 
-let immediate = ((lambda a b -> a) 1 2)
-let simple_im = (lambda a b -> a) 1 2
-let nested    = (lambda a b -> ((lambda c d -> 5) 1 2))
-let five      = ((lambda a b -> ((lambda c d -> 5) 1 2)) 3 4)
+let immediate   = ((lambda a b -> a) 1 2)
+let simple_im   = (lambda a b -> a) 1 2
+let nested      = (lambda a b -> ((lambda c d -> 5) 1 2))
+let five        = ((lambda a b -> ((lambda c d -> 5) 1 2)) 3 4)
