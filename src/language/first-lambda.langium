@@ -14,17 +14,17 @@ Literal:
 
 type Ref = Variable | Parameter;
 
-Lambda:
-    'lambda' (arguments+=Parameter)* '->' '{' value=Expression '}';
-
 Expression:
     UnaryExpression | Lambda | FunctionCall;
 
 UnaryExpression:
     value=Literal | reference=[Ref:ID];
 
+Lambda:
+    '(' 'lambda' (arguments+=Parameter)* '->' value=Expression ')';
+
 FunctionCall:
-    '(' ((lambda=Lambda arguments+=Expression*) | (call=[Ref:ID] arguments+=Expression*)) ')';
+    '(' ((lambda=Lambda argument_values+=Expression*) | (call=[Ref:ID] argument_values+=Expression*)) ')';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;

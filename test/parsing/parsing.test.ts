@@ -47,7 +47,7 @@ describe('Parsing tests', () => {
 
     test('parse nilary lambda definition and call', async () => {
         document = await parse(`
-            let f        = lambda -> {42}
+            let f        = (lambda -> 42)
             let function = f
             let value    = (f)
         `);
@@ -68,7 +68,7 @@ describe('Parsing tests', () => {
 
     test('parse function call', async () => {
         document = await parse(`
-            let first = lambda a b -> {a}
+            let first = (lambda a b -> a)
             let a     = (first 1 2)
         `);
 
@@ -86,7 +86,7 @@ describe('Parsing tests', () => {
 
     test('parse nested function call', async () => {
         document = await parse(`
-            let first = lambda a b -> {a}
+            let first = (lambda a b -> a)
             let a     = (first (first 1 2) 3)
         `);
 
@@ -104,7 +104,7 @@ describe('Parsing tests', () => {
 
     test('parse immediately-invoked lambda', async () => {
         document = await parse(`
-            let x = (lambda a b -> {a} 1 2)
+            let x = ((lambda a b -> a) 1 2)
         `);
 
         expect(
