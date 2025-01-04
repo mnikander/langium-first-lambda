@@ -13,7 +13,8 @@ let second = (lambda a b -> b)
 
 # function calls
 let b = (first 2 y)
-let c = (first (first 1 2) 3)
+let c = first 2 y
+let d = (first (first 1 2) 3)
 
 # Church encoding of booleans and definition of an 'if' function
 let true = first
