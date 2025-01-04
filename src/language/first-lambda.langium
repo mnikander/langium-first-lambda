@@ -4,7 +4,7 @@ entry Model:
     (variables+=Variable)*;
 
 Variable:
-    'let' name=ID '=' (Expression | OutermostExpression);
+    'let' name=ID '=' Expression;
 
 Parameter:
     name=ID;
@@ -22,10 +22,6 @@ Expression:
     | '(' lambda=Lambda ')'
     | ('(' call=[Ref:ID] arguments+=Expression* ')');
 
-OutermostExpression:
-    value=Literal | reference=[Ref:ID]
-    | lambda=Lambda
-    | (call=[Ref:ID] arguments+=Expression*);
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
