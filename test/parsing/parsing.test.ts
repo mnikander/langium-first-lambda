@@ -45,10 +45,13 @@ describe('Parsing tests', () => {
         `);
     });
 
-    test('parse nilary lambda definition', async () => {
+    test('parse nilary lambda definition and call', async () => {
         document = await parse(`
-            let a = lambda -> {42}
+            let f        = lambda -> {42}
+            let function = f
+            let value    = (f)
         `);
+        // TODO: test that 'function' and 'value' are a function definition and a function call, respectively
 
         expect(
             checkDocumentValid(document) || s`
@@ -57,7 +60,9 @@ describe('Parsing tests', () => {
             `
         ).toBe(s`
             Variables:
-              a
+              f
+              function
+              value
         `);
     });
 
