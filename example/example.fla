@@ -1,11 +1,16 @@
-let x = 5
-let y = x
-let a = 1
-let first = lambda a b -> a
-let second = lambda a b -> b
-let z = first 2 y
+let x = 5                     # variable definition
+let y = x                     # variable definition, by reference
 
-let foo = lambda -> 42
-let bar = lambda -> x
+let j = lambda -> 42          # nilary function definition
+let k = lambda -> x           # ... with a variable capture (closure)
 
+let a = 1                     # variable definition, naming collision with argument 'a' in the next line
+let first  = lambda a b -> a  # function definition
+let second = lambda a b -> b  # function definition
+let b = first 2 y             # function call
+let c = first (first 1 2) 3   # nested function call
+
+# Church encoding of booleans and definition of an 'if' function
+let true = first
+let false = second
 let if = lambda condition then else -> (condition then else)
