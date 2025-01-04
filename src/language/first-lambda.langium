@@ -15,7 +15,7 @@ Literal:
 type Ref = Variable | Parameter;
 
 Expression:
-    UnaryExpression | Lambda | FunctionCall;
+    UnaryExpression | Lambda | Application;
 
 UnaryExpression:
     value=Literal | reference=[Ref:ID];
@@ -23,7 +23,7 @@ UnaryExpression:
 Lambda:
     '(' 'lambda' (arguments+=Parameter)* '->' value=Expression ')';
 
-FunctionCall:
+Application:
     '(' ((lambda=Lambda argument_values+=Expression*) | (call=[Ref:ID] argument_values+=Expression*)) ')';
 
 hidden terminal WS: /\s+/;
